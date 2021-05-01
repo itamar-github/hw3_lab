@@ -25,13 +25,23 @@ class Cluster:
         number_of_coordinates = len(self._points[0].coordinates)
         new_coordinates = [0] * number_of_coordinates
 
-        # Now go through each point and add it's coordinates to the center
-        for point in self._points:
-            for coordinate_index, coordinate_value in enumerate(point.coordinates):
-                new_coordinates[coordinate_index] += coordinate_value
+        # create an ordered list of each of the coordinates from 'self._points'
+        coordinates_list = []
+        for entry in range(number_of_coordinates):
+            for point in self._points:
+                coordinates_list.append(point.coordinates[entry])
+            coordinates_list.sort()
 
-        # Divide to find mean
-        new_coordinates = [x / len(self._points) for x in new_coordinates]
+            # set new centroid coordinates to the median
+            num_of_points = len(self._points)
+            if num_of_points % 2 == 0:
+                new_coordinates[entry] = (coordinates_list[num_of_points//2 - 1] + coordinates_list[num_of_points//2])/2
+            else:
+                new_coordinates[entry] = coordinates_list[num_of_points // 2 + 1]
+
+            coordinates_list.clear()
+
+        # set centroid to new coordinates
         self._centroid.set_coordinates(new_coordinates)
 
         is_changed = (old_centroid != tuple(self._centroid.coordinates))
