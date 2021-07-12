@@ -37,7 +37,7 @@ class Cluster:
             if num_of_points % 2 == 0:
                 new_coordinates[entry] = (coordinates_list[num_of_points//2 - 1] + coordinates_list[num_of_points//2])/2
             else:
-                new_coordinates[entry] = coordinates_list[num_of_points // 2 + 1]
+                new_coordinates[entry] = coordinates_list[num_of_points // 2]
 
             coordinates_list.clear()
 
